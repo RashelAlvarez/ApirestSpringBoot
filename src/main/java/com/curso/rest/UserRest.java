@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.curso.controller.UserController;
 import com.curso.model.User;
+import com.curso.repo.UserRepository;
 
 @RestController
 @RequestMapping("users")
 public class UserRest {
 
 	@Autowired
-	private UserController userController;
+	private UserRepository userController;
 
 	@PostMapping("/create")
 	public ResponseEntity<User> create(@RequestBody User user) {
@@ -61,6 +61,10 @@ public class UserRest {
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<User> delete(@PathVariable int id) {
+		if(!userController.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		
 		userController.deleteById(id);
 		return ResponseEntity.ok().build();
 		

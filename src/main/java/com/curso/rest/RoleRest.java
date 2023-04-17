@@ -10,32 +10,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.curso.controller.RoleController;
-import com.curso.controller.UserController;
 import com.curso.model.Role;
 import com.curso.model.User;
+import com.curso.repo.RoleRepository;
+import com.curso.repo.UserRepository;
 
 @RestController
 @RequestMapping("roles")
 public class RoleRest {
 	
 	@Autowired
-	private RoleController roleController;
+	private RoleRepository roleRepository;
 	
 	@Autowired
-	private UserController userController;
+	private UserRepository userRepository;
 	
 	@PostMapping("/create")
 	public void create(@RequestBody Role role){
 		//Optional<User> userOptional= userController.findById(role.getUser().getIduser());
 		
 		//role.setUser(userOptional.get());
-		roleController.save(role);
+		roleRepository.save(role);
 	}
 	
 	@GetMapping("/show")
 	public List<Role> showRole(){
-		return roleController.findAll();
+		return roleRepository.findAll();
 	}
 	
 	//@PutMapping("")
